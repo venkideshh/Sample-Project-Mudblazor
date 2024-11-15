@@ -1,0 +1,17 @@
+{
+  "name": "Roots",
+  "short_name": "Roots",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fefefe",
+  "theme_color": "#f58733",
+  "prefer_related_applications": false,
+  //"display_override": [ "window-controls-overlay" ],
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

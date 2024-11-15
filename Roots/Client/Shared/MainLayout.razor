@@ -1,0 +1,473 @@
+﻿@using EDC.Client.Pages;
+@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime
+@inject ISnackbar Snackbar
+
+<MudThemeProvider Theme="@AppTheme" />
+<MudDialogProvider FullWidth="false"
+                   MaxWidth="MaxWidth.Medium"
+                   CloseButton="true"
+                   Position="DialogPosition.Center"
+                   CloseOnEscapeKey="true" />
+<MudSnackbarProvider />
+<MudSnackbarProvider />
+<MudPopoverProvider />
+<MudLayout>
+    <MudAppBar Class="WindowView" Color="Color.Primary" Dense="true" Fixed="false">
+        <a href="dashboard">
+@*             <div class="logopad"><MudImage Class="logo" Src="Images/logotitle.jpg" /></div>
+ *@        </a>
+        <MudText Class="px-5" Style="font-weight:bold" Typo="Typo.h5">Meeting</MudText>
+        <MudSpacer />
+    </MudAppBar>
+    <MudDrawerContainer>
+
+        <MudMainContent>
+            <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                @Body
+            </MudContainer>
+        </MudMainContent>
+    </MudDrawerContainer>
+</MudLayout>
+
+
+
+@code {
+    private bool _open = false;
+
+    private bool messagepaper = true;
+    private bool PriorityPaper = true;
+
+
+    private void ToggleDrawer()
+    {
+        _open = !_open;
+    }
+    public void OpenMessage()
+    {
+        messagepaper = !messagepaper;
+    }
+    public void OpenPriority()
+    {
+        PriorityPaper = !PriorityPaper;
+    }
+
+
+}
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+<style type="text/css">
+    .fa-lg {
+        line-height: 1 !important;
+    }
+
+    div.fixed {
+        position: fixed;
+        bottom: 50px;
+        right: 20px;
+        border-radius: 50%;
+    }
+
+    div.fixed2 {
+        position: fixed;
+        bottom: 110px;
+        right: 20px;
+    }
+
+    .messagepaper {
+        height: 420px;
+        width: 300px;
+        border-radius: 15px;
+        background-color: #dbdbee;
+    }
+
+    .ChatMessage-left {
+        background-color: white;
+        border-radius: 0px 15px 15px 15px;
+        padding: 10px;
+        width: 80%;
+        margin-left: 3px;
+        float: left;
+        margin-bottom: 8px;
+    }
+
+    .ChatMessage-Right {
+        background-color: #6f6dbd;
+        border-radius: 15px 0px 15px 15px;
+        padding: 10px;
+        width: 80%;
+        margin-right: 3px;
+        float: right;
+        margin-bottom: 8px;
+        overflow-wrap: break-word;
+    }
+
+    .logo {
+        width: 54px;
+        height: auto;
+    }
+
+    .Pofile-Name {
+        color: #0d6efd !important;
+        text-decoration: underline !important;
+    }
+
+    .changepassword-Button {
+        height: 35px;
+        width: 135px;
+        border: 1px solid #f8f9fa;
+        border-radius: 5px;
+        margin: 10px 10px;
+        font-weight: 600;
+        background-color: #eeefef;
+    }
+
+    .signout-Button {
+        height: 35px;
+        width: 90px;
+        border: 1px solid #4B49AC;
+        border-radius: 5px;
+        margin: 10px 10px;
+        font-weight: 600;
+        background-color: #4B49AC;
+        color: white;
+    }
+
+    .profile {
+        font-weight: 700 !important;
+        border-radius: 50%;
+        background-color: white !important;
+        color: #4B49AC !important;
+        height: 35px;
+        width: 40px;
+        justify-content: center;
+    }
+
+    @@media only screen and (max-width: 1023px) {
+
+        .timeline {
+            display: none;
+        }
+    }
+
+    .MobileView {
+        display: none;
+    }
+
+    .WindowView {
+        display: block;
+    }
+
+    @@media (max-width: 1024px) {
+        .WindowView {
+            display: none;
+        }
+
+
+        .MobileView {
+            display: block;
+        }
+
+        .mud-main-content {
+            margin-left: 0px !important;
+        }
+
+        .mud-table-cell {
+            border: 2px solid #e3ebf3;
+            padding: 10px !important;
+            text-align: center;
+        }
+    }
+
+    @@media (max-width: 400px) {
+        .WindowView {
+            display: none;
+        }
+
+        .profile {
+            justify-content: center;
+        }
+
+        .MobileView {
+            display: block;
+        }
+
+        .mud-main-content {
+            margin-left: 0px !important;
+        }
+
+        .mud-table-cell {
+            border: 2px solid #e3ebf3;
+            padding: 10px !important;
+            text-align: center;
+        }
+    }
+
+    .mud-table-root .mud-table-head .mud-table-cell {
+        line-height: 1.5rem;
+        color: white;
+        font-weight: bolder;
+    }
+
+    .mud-table-body .mud-table-row td:nth-of-type(even) {
+        background-color: #f9f9fc;
+    }
+
+    .mud-table-body .mud-table-row td:nth-of-type(odd) {
+        background-color: white;
+    }
+
+    @@media (max-width: 600px) {
+        .mud-xs-table.mud-table-dense .mud-table-cell {
+            padding: 6px 16px !important;
+        }
+    }
+
+    @@media (min-width: 640px) {
+        .Menuiconappbar {
+            display: none;
+        }
+    }
+
+    @@media (max-width: 640px) {
+        .heading {
+            display: none;
+        }
+    }
+
+    .Notification-Button {
+        background-color: transparent !important;
+        color: #ffffff !important;
+    }
+
+    .fluent-input-label[b-hum22yrq17] {
+        font-weight: bold;
+    }
+
+    .message-bar-container {
+        width: auto;
+        display: flex;
+        justify-content: flex-end;
+        z-index: 9999;
+        max-width: 400px;
+        min-width: 275px;
+        margin: 20px;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+    }
+
+    .main_message-bar-container {
+        position: fixed !important;
+        z-index: 9999;
+    }
+
+    .NavBar-Header {
+        background-color: #f57744 !important;
+    }
+
+    .logopad {
+        background-color: white;
+        padding: 6px 6px;
+    }
+
+    .border-Orange {
+        border-color: #f57744 !important;
+    }
+
+    .InnerAppearancecolor {
+        /*         background: #f57744 !important;
+                 */ color: white;
+        height: 35px;
+        border-radius: 5px;
+        border: #f57744;
+        font-weight: 500;
+    }
+
+    .OuterAppearancecolor {
+        background: lightgray !important;
+        color: black !important;
+        width: 79px;
+        height: 35px;
+        border-radius: 5px;
+        border: lightgray;
+        font-weight: 500;
+    }
+
+    .sidebar {
+        max-height: max-content;
+    }
+
+    .refreshbtn {
+        margin-right: 10px;
+    }
+
+    .ApproveAppearancecolor {
+        background: green !important;
+        color: white;
+        width: 79px;
+        height: 35px;
+        border-radius: 5px;
+        border: green;
+        font-weight: 500;
+    }
+
+    .RejectAppearancecolor {
+        background: red !important;
+        color: white;
+        width: 79px;
+        height: 35px;
+        border-radius: 5px;
+        border: red;
+        font-weight: 500;
+    }
+
+    .indeterminate-indicator-1 {
+        stroke: red !important;
+    }
+
+    .header-title {
+        color: white !important;
+        margin-left: 20px;
+        font-weight: bolder;
+    }
+
+    @@media (max-width: 767px) {
+        .header-title {
+            font-weight: bold;
+            font-size: 15px;
+        }
+    }
+
+    body {
+        height: 100%;
+        width: 100%;
+        background-color: #f5f5f5 !important;
+        overflow-x: hidden;
+    }
+
+    .navmenu {
+        background-color: white !important;
+    }
+
+    .cardpadding {
+        padding-bottom: 300px !important;
+    }
+
+    .fluent-nav-icon {
+        fill: #f57744 !important;
+    }
+
+    .pt-5, .py-5 {
+        padding-top: 5px !important;
+    }
+
+    .mud-layout {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+    }
+
+    .mud-dialog .mud-dialog-title .mud-button-close {
+        top: 8px;
+        right: 8px;
+        position: absolute;
+    }
+
+    .mud-table-root .mud-table-head {
+        background-color: #4B49AC
+    }
+
+    .mud-data-grid .mud-table-cell .column-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mud-table-cell {
+        border: 1px solid #e3ebf3;
+        /*         padding: 0px; */
+        text-align: center;
+    }
+
+    /* .mud-table-root .mud-table-head {
+                        background-color: lightgrey;
+                    } */
+
+    .selctallcheckbox {
+        padding-top: 20px;
+    }
+
+    .mud-dialog-width-md {
+        max-width: 956px;
+    }
+    /* Rows Content Bold */
+    .mud-table-pagination-caption {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-weight: 900;
+    }
+
+    .mud-dialog .mud-dialog-title {
+        z-index: 1;
+        width: 350px;
+        flex: 0 0 auto;
+        margin: 0;
+        padding: 16px 24px;
+        border-top-left-radius: var(--mud-default-borderradius);
+        border-top-right-radius: var(--mud-default-borderradius);
+    }
+
+    .deptdialogue {
+        background-color: #f5f5f5 !important;
+    }
+
+    .departmentname {
+        padding-right: 24px;
+        padding-bottom: 24px;
+    }
+
+    .deptname {
+        background-color: azure;
+        border-radius: 5px;
+        height: 80px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: 5px;
+    }
+
+    .mud-drawer.mud-drawer-mini.mud-drawer-pos-left {
+        top: 50px !important;
+    }
+
+    .mud-main-content {
+        padding-top: 0px !important;
+    }
+
+    .approve-btn {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .winnavicon {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .WindowView .mud-tooltip-root {
+        width: -webkit-fill-available;
+    }
+</style>
+

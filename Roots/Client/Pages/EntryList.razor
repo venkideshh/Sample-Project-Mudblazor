@@ -1,0 +1,56 @@
+﻿@page "/EntryReport"
+
+<PageTitle>Survey</PageTitle>
+
+<MudText Typo="Typo.h4"><b>Entry List</b></MudText>
+
+<MudGrid Class="moveEnd">
+    <MudItem md="3" sm="6" xs="9" Style="text-align-last: right">
+        <MudDatePicker @bind-Date="Entrydate" TransformOrigin="Origin.CenterLeft" PickerVariant="PickerVariant.Dialog" Placeholder="Select Date" Clearable="true" />
+    </MudItem>
+
+     <MudItem md="1" sm="2" xs="3" Class="mt-5">
+    <MudIconButton Icon="@Icons.Material.Outlined.Search" Title="Search" Variant="Variant.Outlined" ButtonType="ButtonType.Submit" OnClick="LoadData" />
+    </MudItem>
+</MudGrid>
+
+<MudDataGrid Class="mt-5" Items="@SortedEntryCountList" MultiSelection="false" SelectOnRowClick="false" Filterable="false" Groupable="false" SortMode="SortMode.Multiple" Hideable="true" Bordered="true">
+    <Columns>
+        <TemplateColumn Title="S.No">
+            <CellTemplate>
+                <MudText>
+                    @((SortedEntryCountList.IndexOf(context.Item) + 1))
+                </MudText>
+            </CellTemplate>
+        </TemplateColumn>
+        <PropertyColumn Property="x => x.CreatedBy" Title="Mobile Number" />
+        <PropertyColumn Property="x => x.RecordCount" Title="No of Entries" />
+        <PropertyColumn Property="x => x.EntryDate" Title="Entry Date" Format="dd MMM yyyy" />
+    </Columns>
+    <NoRecordsContent>
+        No Items Found
+    </NoRecordsContent>
+</MudDataGrid>
+
+<style>
+    .moveEnd {
+        justify-content: end !important;
+    }
+
+    .mud-data-grid .mud-table-cell .column-header .sortable-column-header {
+        font-weight: bold;
+        color: white;
+    }
+
+    .mud-table-head {
+        background-color: #4169E1;
+    }
+
+    .mud-table-body .mud-table-row:nth-of-type(even) {
+        background-color: #87CEEB;
+    }
+
+    .mud-table-body .mud-table-row:nth-of-type(odd) {
+        background-color: white;
+    }
+</style>

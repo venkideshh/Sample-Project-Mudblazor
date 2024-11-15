@@ -1,0 +1,238 @@
+﻿@page "/"
+@page "/tamilsurvey"
+
+<EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <MudGrid>
+        <MudItem xs="12" sm="12" md="12">
+            <MudCard>
+                <MudCardContent>
+                    <MudGrid>
+                        <!-- District Field -->
+                        <MudItem md="4" sm="6" xs="12">
+                            <MudText Typo="Typo.subtitle2">
+                                <b>மாவட்டம் <span style="color: red">*</span></b>
+                            </MudText>
+                            @if (Loading)
+                            {
+                                <MudSkeleton Variant="Variant.Rectangular" Width="100%" Height="40px" />
+                            }
+                            else
+                            {
+                                <MudSelect Placeholder="---தேர்ந்தெடுக்கவும்---" @bind-Value="model.DistrictId" AnchorOrigin="Origin.BottomCenter" OnClose="DistrictClear" OnClearButtonClick="DistrictClear" Clearable="true" Variant="Variant.Outlined" AdornmentIcon="@Icons.Material.Filled.Search" AdornmentColor="Color.Primary" For="@(() => model.DistrictId)">
+                                    @if (DistrictList != null)
+                                    {
+                                        @foreach (var cnt in DistrictList)
+                                        {
+                                            <MudSelectItem Value="cnt.Id">@cnt.TamilName</MudSelectItem>
+                                        }
+                                    }
+                                </MudSelect>
+                            }
+                        </MudItem>
+
+                        <!-- Parliament Constituency Field -->
+                        <MudItem md="4" sm="6" xs="12">
+                            <MudText Typo="Typo.subtitle2"><b>பாராளுமன்ற தொகுதி <span style="color: red">*</span></b></MudText>
+                            @if (Loading)
+                            {
+                                <MudSkeleton Variant="Variant.Rectangular" Width="100%" Height="40px" />
+                            }
+                            else
+                            {
+                                <MudSelect Placeholder="---தேர்ந்தெடுக்கவும்---" @bind-Value="model.ParliamentConstituencyId" AnchorOrigin="Origin.BottomCenter" OnClose="ParliamentConstituencyClear" OnClearButtonClick="ParliamentConstituencyClear" Clearable="true" Variant="Variant.Outlined" AdornmentIcon="@Icons.Material.Filled.Search" AdornmentColor="Color.Primary">
+                                    @if (ParliamentConstituencyList != null)
+                                    {
+                                        @foreach (var cnt in ParliamentConstituencyList.Where(x => x.DistrictId == model.DistrictId))
+                                        {
+                                            <MudSelectItem Value="cnt.Id">@cnt.TamilName</MudSelectItem>
+                                        }
+                                    }
+                                </MudSelect>
+                            }
+                        </MudItem>
+
+                        <!-- Constituency Field -->
+                        <MudItem md="4" sm="6" xs="12">
+                            <MudText Typo="Typo.subtitle2"><b>சட்டமன்ற தொகுதி <span style="color: red">*</span></b></MudText>
+                            @if (Loading)
+                            {
+                                <MudSkeleton Variant="Variant.Rectangular" Width="100%" Height="40px" />
+                            }
+                            else
+                            {
+                                <MudSelect Placeholder="---தேர்ந்தெடுக்கவும்---" @bind-Value="model.ConstituencyId" AnchorOrigin="Origin.BottomCenter" Clearable="true" Variant="Variant.Outlined" AdornmentIcon="@Icons.Material.Filled.Search" AdornmentColor="Color.Primary">
+                                    @if (ConstituencyList != null)
+                                    {
+                                        @foreach (var cnt in ConstituencyList.Where(x => x.ParliamentConstituencyNo == model.ParliamentConstituencyId))
+                                        {
+                                            <MudSelectItem Value="cnt.Id">@cnt.TamilName</MudSelectItem>
+                                        }
+                                    }
+                                </MudSelect>
+                            }
+                        </MudItem>
+
+                        <!-- Area Type Field -->
+                        <MudItem md="4" sm="6" xs="12">
+                            <MudText Typo="Typo.subtitle2"><b>தொகுதி வகை <span style="color: red">*</span></b></MudText>
+                            @if (Loading)
+                            {
+                                <MudSkeleton Variant="Variant.Rectangular" Width="100%" Height="40px" />
+                            }
+                            else
+                            {
+                                <MudSelect Placeholder="---தேர்ந்தெடுக்கவும்---" @bind-Value="model.AreaTypeId" AnchorOrigin="Origin.BottomCenter" Clearable="true" Variant="Variant.Outlined" AdornmentIcon="@Icons.Material.Filled.Search" AdornmentColor="Color.Primary">
+                                    @if (AreaTypeList != null)
+                                    {
+                                        @foreach (var cnt in AreaTypeList)
+                                        {
+                                            <MudSelectItem Value="cnt.Id">@cnt.TamilName</MudSelectItem>
+                                        }
+                                    }
+                                </MudSelect>
+                            }
+                        </MudItem>
+
+                        <!-- Area Name Field -->
+                        <MudItem md="4" sm="6" xs="12">
+                            <MudText Typo="Typo.subtitle2"><b>ஊர் பெயர் <span style="color: red">*</span></b></MudText>
+                            @if (Loading)
+                            {
+                                <MudSkeleton Variant="Variant.Rectangular" Width="100%" Height="40px" />
+                            }
+                            else
+                            {
+                                <MudTextField Placeholder="ஊர் பெயர்" Variant="Variant.Outlined" @bind-Value="model.AreaName" For="@(() => model.AreaName)" />
+                            }
+                        </MudItem>
+
+                        <!-- Booth Number Field -->
+                        <MudItem md="4" sm="6" xs="12">
+                            <MudText Typo="Typo.subtitle2"><b>பூத் எண் <span style="color: red">*</span></b></MudText>
+                            @if (Loading)
+                            {
+                                <MudSkeleton Variant="Variant.Rectangular" Width="100%" Height="40px" />
+                            }
+                            else
+                            {
+                                <MudNumericField Placeholder="பூத் எண்" Variant="Variant.Outlined" @bind-Value="model.BoothNo" For="@(() => model.BoothNo)" />
+                            }
+                        </MudItem>
+
+                        <!-- Name Field -->
+                        <MudItem md="4" sm="6" xs="12">
+                            <MudText Typo="Typo.subtitle2"><b>பெயர் <span style="color: red">*</span></b></MudText>
+                            @if (Loading)
+                            {
+                                <MudSkeleton Variant="Variant.Rectangular" Width="100%" Height="40px" />
+                            }
+                            else
+                            {
+                                <MudTextField Placeholder="பெயர்" Variant="Variant.Outlined" @bind-Value="model.Name" For="@(() => model.Name)" />
+                            }
+                        </MudItem>
+
+                        <!-- Phone Number Field -->
+                        <MudItem md="4" sm="6" xs="12">
+                            <MudText Typo="Typo.subtitle2"><b>தொலைபேசி எண் <span style="color: red">*</span></b></MudText>
+                            @if (Loading)
+                            {
+                                <MudSkeleton Variant="Variant.Rectangular" Width="100%" Height="40px" />
+                            }
+                            else
+                            {
+                                <MudTextField T="string" Variant="Variant.Outlined" @bind-Value="model.PhoneNo" MaxLength="10" Placeholder="தொலைபேசி எண்" InputMode="InputMode.numeric" />
+                            }
+                        </MudItem>
+
+                        <!-- Gender Field -->
+                        <MudItem md="4" sm="6" xs="12">
+                            <MudText Typo="Typo.subtitle2"><b>பாலினம் <span style="color: red">*</span></b></MudText>
+                            @if (Loading)
+                            {
+                                <MudSkeleton Variant="Variant.Rectangular" Width="100%" Height="40px" />
+                            }
+                            else
+                            {
+                                <MudRadioGroup T="string" Required="true" @bind-Value="model.Gender">
+                                    <MudRadio Value="@("Male")">ஆண் </MudRadio>
+                                    <MudRadio Value="@("Female")">பெண்</MudRadio>
+                                    <MudRadio Value="@("Others")">மற்றவை</MudRadio>
+                                </MudRadioGroup>
+                            }
+                        </MudItem>
+
+                        <!-- Address Field -->
+                        <MudItem md="4" sm="6" xs="12">
+                            <MudText Typo="Typo.subtitle2"><b>முகவரி <span style="color: red">*</span></b></MudText>
+                            @if (Loading)
+                            {
+                                <MudSkeleton Variant="Variant.Rectangular" Width="100%" Height="40px" />
+                            }
+                            else
+                            {
+                                <MudTextField T="string" Variant="Variant.Outlined" @bind-Value="model.Address" MaxLength="150" Lines="3" Placeholder="முகவரி" />
+                            }
+                        </MudItem>
+
+                        <!-- File Upload Field -->
+                        <MudItem md="4" sm="6" xs="12">
+                            <MudText Typo="Typo.subtitle2"><b>புகைப்படம்</b></MudText>
+                            @if (Loading)
+                            {
+                                <MudSkeleton Variant="Variant.Rectangular" Width="100%" Height="40px" />
+                            }
+                            else
+                            {
+                                <MudFileUpload T="IBrowserFile" For="@(() => ImageFile)" @bind-Files="ImageFile" Accept=".jpeg,.jpg,.png">
+                                    <ActivatorContent>
+                                        <MudButton HtmlTag="label" Class="mt-3" Variant="Variant.Filled" Color="Color.Primary">
+                                            படத்தை பதிவேற்றவும்
+                                        </MudButton>
+                                    </ActivatorContent>
+                                    <SelectedTemplate Context="fileContext">
+                                        @if (ImageFile != null && fileContext != null)
+                                        {
+                                            <MudText>@fileContext.Name</MudText>
+                                        }
+                                    </SelectedTemplate>
+                                </MudFileUpload>
+
+                            }
+                        </MudItem>
+
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="12">
+            <MudItem md="12" sm="12" xs="12" Style="text-align-last: center;">
+                @if (Loading)
+                {
+                    <MudSkeleton Variant="Variant.Rectangular" Width="150px" Height="40px" />
+                    <MudSkeleton Variant="Variant.Rectangular" Width="150px" Height="40px" />
+                }
+                else
+                {
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" OnClick="Save" Color="Color.Success">
+                        சமர்ப்பிக்கவும்
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Default" Size="Size.Medium" Color="Color.Secondary" OnClick="Logout">
+                        புதுப்பிப்பு
+                    </MudButton>
+                }
+            </MudItem>
+        </MudItem>
+
+    </MudGrid>
+</EditForm>
+
+
+
+<style>
+    .d-flex {
+        display: inline-table !important;
+    }
+</style>
